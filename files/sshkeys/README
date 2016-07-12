@@ -1,0 +1,2 @@
+Default directory where the ssh-key files go
+filename = loginname.pub

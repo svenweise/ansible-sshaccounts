@@ -1,0 +1,2 @@
+Default directory where the sudoers files go
+filename = unixgroupname

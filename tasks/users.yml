@@ -1,0 +1,32 @@
+# vim:ff=unix ts=2 sw=2 ai expandtab
+---
+- name: Add group(s) for Users
+  group: name="{{ item.group | default(item.name) }}" gid="{{ item.gid | default(omit) }}"
+  with_items: "{{ users }}"
+
+- name: Add Users
+  user: 
+    name:     "{{ item.name }}"
+    comment:  "{{ item.comment }}"
+    uid:      "{{ item.uid | default(omit) }}"
+    group:    "{{ item.group | default(item.name) }}"
+    groups:   "{{ item.groups | default(defaultunixgroup) | join(',') }}"
+    hame:     "{{ item.home | default(omit) }}"
+    shell:    "{{ item.shell | default('/bin/bash') }}"
+    password: "{{ item.passhash | default(omit) }}"
+    state:    "{{ item.state | default('present') }}"
+  with_items: "{{ users }}"
+
+- name: Sync SSH-Keys
+  authorized_key:
+    user:        "{{ item.name }}"
+    key:         "{{ lookup ('file', item.keyfile | default(sshkeypath ~ item.name ~ '.pub')) }}"
+    key_options: "{{ item.key_opts|default(omit) }}"
+    exclusive:   "yes"
+  with_items: "{{ users }}"
+
+- name: Setting up sudo for user
+  copy: src="{{ item.sudoers }}" dest="/etc/sudoers.d/{{ item.sudoers | basename }}" mode=0400 validate='visudo -cf %s'
+  when: item.sudoers is defined 
+  with_items: "{{ users }}"
+

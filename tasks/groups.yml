@@ -1,0 +1,9 @@
+# vim:ff=unix ts=2 sw=2 ai expandtab
+---
+- name: Add some groups we want for this world
+  group: name="{{ item.name }}" gid="{{item.gid | default(omit)}}"
+  with_items: "{{ unixgroups }}"
+
+- name: Setting up sudo for the groups
+  copy: src="{{ item.sudoers | default(sudoerspath ~ item.name) }}" dest=/etc/sudoers.d/{{ item.sudoers | default(sudoerspath ~ item.name) | basename }} mode=0400 validate='visudo -cf %s'
+  with_items: "{{ unixgroups }}"

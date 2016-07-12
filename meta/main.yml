@@ -1,0 +1,38 @@
+---
+
+galaxy_info:
+  author: 'Sven Weise'
+  description: 'Managing ssh shellaccounts'
+  license: 'BSD'
+  min_ansible_version: '2.1.0.0'
+  platforms:
+    - name: Debian
+      versions:
+        - wheezy
+        - jessie
+    - name: Ubuntu
+      versions:
+        - 'Wily Werewolf'
+        - 'Xenial Xerus'
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: Fedora
+      versions:
+        - 23
+        - 24
+    - name: CentOS
+      versions:
+        - 6
+        - 7
+  galaxy_tags:
+    - accounts
+    - ssh
+    - sudoers
+    - ssh-key
+
+dependencies: []
+  
+allow_duplicates: yes 
+
