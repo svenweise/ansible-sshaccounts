@@ -11,7 +11,7 @@
     uid:      "{{ item.uid | default(omit) }}"
     group:    "{{ item.group | default(item.name) }}"
     groups:   "{{ item.groups | default(defaultunixgroup) | join(',') }}"
-    hame:     "{{ item.home | default(omit) }}"
+    home:     "{{ item.home | default(omit) }}"
     shell:    "{{ item.shell | default('/bin/bash') }}"
     password: "{{ item.passhash | default(omit) }}"
     state:    "{{ item.state | default('present') }}"
